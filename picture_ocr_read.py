@@ -12,28 +12,28 @@ print "Picture OCR Read... ",
 sys.stdout.flush()
 
 
-video_frame_name = sys.argv[1]
+screen_frame_name = sys.argv[1]
 image_type = ".png"
-video_seconds_name = video_frame_name + "_second_"
-full_image_path = "screen_shots/" + video_seconds_name
+screen_iteration_name = screen_frame_name + "_"
+full_image_path = "screen_shots/" + screen_iteration_name
 
-video_text_file = "image_text/"
+screen_text_file = "screen_text/"
 
-movie_text_write = open(video_text_file+video_frame_name+".txt", "w")
+movie_text_write = open(screen_text_file+screen_frame_name+".txt", "w")
 
-sec = 0
-while os.path.exists(full_image_path+"%d" % sec+image_type):
-    if sec != 0:
-        full_string = "\n\nzzzzzzzzzzzsecond: %d" % sec + "\n"
+iteration = 0
+while os.path.exists(full_image_path+"%d" % iteration+image_type):
+    if iteration != 0:
+        full_string = "\n\nzzzzzzzzzzziteration: %d" % iteration + "\n"
     else:
-        full_string = "zzzzzzzzzzzsecond: %d" % sec + "\n"
-    ocr_text = pytesseract.image_to_string(Image.open(full_image_path+"%d" % sec+image_type))
+        full_string = "zzzzzzzzzzziteration: %d" % iteration + "\n"
+    ocr_text = pytesseract.image_to_string(Image.open(full_image_path+"%d" % iteration+image_type))
     parse_text = re.findall("[a-zA-Z]+", ocr_text)
     full_string += ' '.join(parse_text)
     full_string = full_string.lower()
     movie_text_write.write(full_string)
 
-    sec += 1
+    iteration += 1
 
 movie_text_write.close()
 

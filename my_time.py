@@ -4,23 +4,34 @@ import os
 
 file_name = sys.argv[1]
 
-try:
-    os.mkdir("./screen_shots")
-except OSError:
-    print("Could not make folder: screen_shots")
+screen_capture_dir = "./screen_shots"
+picture_ocr_read_dir = "./screen_text"
+screen_text_array_format_dir = "./time_matrix"
 
-try:
-    os.mkdir("./time_matrix")
-except OSError:
-    print("Could not make folder: time_matrix")
 
-try:
-    os.mkdir("./image_text")
-except OSError:
-    print("Could not make folder: image_text")
+if not os.path.isdir(screen_capture_dir):
+    try:
+        os.mkdir(screen_capture_dir)
+        print("Made directory: " + screen_capture_dir)
+    except OSError:
+        print("Could not make folder: screen_shots")
+
+if not os.path.isdir(screen_text_array_format_dir):
+    try:
+        os.mkdir(screen_text_array_format_dir)
+        print("Made directory: " + screen_text_array_format_dir)
+    except OSError:
+        print("Could not make folder: time_matrix")
+
+if not os.path.isdir(picture_ocr_read_dir):
+    try:
+        os.mkdir(picture_ocr_read_dir)
+        print("Made directory: " + picture_ocr_read_dir)
+    except OSError:
+        print("Could not make folder: screen_text")
 
 
 #call(["python", "video_frame_reduce.py", video_file_name])
 call(["python", "screen_capture.py", file_name])
 call(["python", "picture_ocr_read.py", file_name])
-call(["python", "video_text_array_format.py", file_name])
+call(["python", "screen_text_array_format.py", file_name])

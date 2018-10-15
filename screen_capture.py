@@ -56,8 +56,9 @@ while(current_iteration < 5):
     print(current_seconds)
 '''
 
-while(current_iteration < 5):
+while(current_iteration < 1):
     screen_shot = ImageGrab.grab(bbox=(0, 0, screen_width, screen_height))
+    screen_shot = screen_shot.convert('L')
     screen_shot.save(file_path + title + "_" + str(current_iteration) + file_type)
     current_iteration += 1
     time.sleep(screen_capture_rate_seconds)
