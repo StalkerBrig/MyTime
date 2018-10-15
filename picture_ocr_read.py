@@ -15,9 +15,9 @@ sys.stdout.flush()
 video_frame_name = sys.argv[1]
 image_type = ".png"
 video_seconds_name = video_frame_name + "_second_"
-full_image_path = "video_frames/" + video_seconds_name
+full_image_path = "screen_shots/" + video_seconds_name
 
-video_text_file = "video_text/"
+video_text_file = "image_text/"
 
 movie_text_write = open(video_text_file+video_frame_name+".txt", "w")
 

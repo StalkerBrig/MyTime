@@ -1,6 +1,7 @@
 import pyscreenshot as ImageGrab
 from screeninfo import get_monitors
 import time
+import sys
 
 def monitor_size():
     get_monitors_str = str(get_monitors())
@@ -27,18 +28,40 @@ def monitor_size():
     return screen_width, screen_height
 
 
+print "Screen Capture... ",
+sys.stdout.flush()
+
+
+
+
 file_path = "./screen_shots/"
-title = "test_"
+title = sys.argv[1]
 file_type = ".png"
 
 screen_width, screen_height = monitor_size()
+screen_capture_rate_seconds = 3
 
 current_seconds = int(time.time())
+prev_5_second = 0
 current_iteration = 0
-while(current_iteration < 10):
-    if current_seconds%5 == 0:
+
+'''
+while(current_iteration < 5):
+    if current_seconds%screen_capture_rate_seconds == 0 and prev_5_second != current_seconds:
         screen_shot = ImageGrab.grab(bbox=(0, 0, screen_width, screen_height))
         screen_shot.save(file_path + title + str(current_iteration) + file_type)
         current_iteration += 1
-    current_seconds = current_seconds = int(time.time())
+        prev_5_second = current_seconds
+    current_seconds = int(time.time())
+    print(current_seconds)
+'''
 
+while(current_iteration < 5):
+    screen_shot = ImageGrab.grab(bbox=(0, 0, screen_width, screen_height))
+    screen_shot.save(file_path + title + "_" + str(current_iteration) + file_type)
+    current_iteration += 1
+    time.sleep(screen_capture_rate_seconds)
+
+
+print("complete!")
+sys.stdout.flush()
