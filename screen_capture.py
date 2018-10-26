@@ -2,6 +2,7 @@ import pyscreenshot as ImageGrab
 from screeninfo import get_monitors
 import time
 import sys
+from PIL import ImageFilter
 
 def monitor_size():
     get_monitors_str = str(get_monitors())
@@ -59,6 +60,7 @@ while(current_iteration < 5):
 while(current_iteration < 1):
     screen_shot = ImageGrab.grab(bbox=(0, 0, screen_width, screen_height))
     screen_shot = screen_shot.convert('L')
+    #screen_shot = screen_shot.filter(ImageFilter.GaussianBlur(.5))
     screen_shot.save(file_path + title + "_" + str(current_iteration) + file_type)
     current_iteration += 1
     time.sleep(screen_capture_rate_seconds)
