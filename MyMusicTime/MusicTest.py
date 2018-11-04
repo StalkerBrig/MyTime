@@ -39,81 +39,6 @@ image_note = full_image_path+"%d" % iteration+image_type
 
 on_list = []
 
-if False:
-    on = midi.NoteOnEvent(tick=0, velocity=20, pitch=48)
-    track.append(on)
-
-    on = midi.NoteOnEvent(tick=0, velocity=21, pitch=60)
-    track.append(on)
-
-    off  = midi.NoteOffEvent(tick=100, pitch=48)
-    track.append(off)
-
-    off  = midi.NoteOffEvent(tick=100, pitch=60)
-    track.append(off)
-
-    on = midi.NoteOnEvent(tick=0, velocity=22, pitch=48)
-    track.append(on)
-
-    on = midi.NoteOnEvent(tick=0, velocity=24, pitch=60)
-    track.append(on)
-
-    off  = midi.NoteOffEvent(tick=100, pitch=48)
-    track.append(off)
-
-    off  = midi.NoteOffEvent(tick=100, pitch=60)
-    track.append(off)
-
-    on = midi.NoteOnEvent(tick=0, velocity=20, pitch=48)
-    track.append(on)
-
-    on = midi.NoteOnEvent(tick=0, velocity=20, pitch=60)
-    track.append(on)
-
-    off  = midi.NoteOffEvent(tick=100, pitch=48)
-    track.append(off)
-
-    off  = midi.NoteOffEvent(tick=100, pitch=60)
-    track.append(off)
-
-    on = midi.NoteOnEvent(tick=0, velocity=20, pitch=48)
-    track.append(on)
-
-    on = midi.NoteOnEvent(tick=0, velocity=20, pitch=60)
-    track.append(on)
-
-    off = midi.NoteOffEvent(tick=100, pitch=48)
-    track.append(off)
-
-    off = midi.NoteOffEvent(tick=100, pitch=60)
-    track.append(off)
-
-    on = midi.NoteOnEvent(tick=0, velocity=20, pitch=48)
-    track.append(on)
-
-    on = midi.NoteOnEvent(tick=0, velocity=20, pitch=60)
-    track.append(on)
-
-    off = midi.NoteOffEvent(tick=100, pitch=48)
-    track.append(off)
-
-    off = midi.NoteOffEvent(tick=100, pitch=60)
-    track.append(off)
-
-    on = midi.NoteOnEvent(tick=0, velocity=20, pitch=48)
-    track.append(on)
-
-    on = midi.NoteOnEvent(tick=0, velocity=20, pitch=60)
-    track.append(on)
-
-    off = midi.NoteOffEvent(tick=100, pitch=48)
-    track.append(off)
-
-    off = midi.NoteOffEvent(tick=100, pitch=60)
-    track.append(off)
-
-
-
 while os.path.exists(image_note):
     im = Image.open(image_note)
 
@@ -121,7 +46,7 @@ while os.path.exists(image_note):
 
     p_tick = 0
     p_velocity = (20+iteration)%50
-    p_pitch = (pixel[0][0] + pixel[0][1] + pixel[0][2])%112
+    p_pitch = (pixel[0][0] + pixel[0][1] + pixel[0][2])%108
 
     note_values = [p_tick, p_velocity, p_pitch]
 
