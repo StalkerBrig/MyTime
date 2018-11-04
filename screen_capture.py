@@ -4,6 +4,8 @@ import time
 import sys
 from PIL import ImageFilter
 
+
+
 def monitor_size():
     get_monitors_str = str(get_monitors())
 
@@ -33,7 +35,8 @@ print "Screen Capture... ",
 sys.stdout.flush()
 
 
-
+#TODO: Change this to accept argument value; using for MyMusicTime
+COLOR = True  # type: bool
 
 file_path = "./screen_shots/"
 title = sys.argv[1]
@@ -57,9 +60,10 @@ while(current_iteration < 5):
     print(current_seconds)
 '''
 
-while(current_iteration < 1):
+while(current_iteration < 100):
     screen_shot = ImageGrab.grab(bbox=(0, 0, screen_width, screen_height))
-    screen_shot = screen_shot.convert('L')
+    if not COLOR:
+        screen_shot = screen_shot.convert('L')
     #screen_shot = screen_shot.filter(ImageFilter.GaussianBlur(.5))
     screen_shot.save(file_path + title + "_" + str(current_iteration) + file_type)
     current_iteration += 1
