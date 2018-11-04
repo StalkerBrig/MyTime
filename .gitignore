@@ -3,5 +3,5 @@ screen_text
 screen_shots
 venv
 .idea
-./MyMusicTime/midi_files/*
-./MyMusicTime/screen_average_color/*
+./MyMusicTime/midi_files
+./MyMusicTime/screen_average_color
