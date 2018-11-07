@@ -1,14 +1,31 @@
 from subprocess import call
 import sys
 import os
+from datetime import datetime
+import PySimpleGUI27 as sg
 
-file_name = sys.argv[1]
+#TODO: Using for potentialy GUI in the future
+#sg.Popup('Welcome to MyTime!', 'Hopefully things will /timely/', 'Hahaha, I am so funny')
 
+#makes a default name for the files to be saved, based on date
+date_and_time = datetime.now()
+default_file_name = date_and_time.strftime("%B-%d-%Y--%I-%M-%S-%p")
+
+#if user doesn't input anything, files saved will use default_file_name
+file_name = default_file_name
+
+#Sees if user made a name for the file. If user types default, will use default_file_name
+if len(sys.argv) >= 2 and sys.argv[1].lower() != "default":
+    file_name = sys.argv[1]
+
+
+#names of the directories needed for the program
 screen_capture_dir = "./screen_shots"
 picture_ocr_read_dir = "./screen_text"
 screen_text_array_format_dir = "./time_matrix"
 
 
+#Creates/checks for required directories for other programs
 if not os.path.isdir(screen_capture_dir):
     try:
         os.mkdir(screen_capture_dir)
@@ -31,7 +48,7 @@ if not os.path.isdir(picture_ocr_read_dir):
         print("Could not make folder: screen_text")
 
 
-#call(["python", "video_frame_reduce.py", video_file_name])
+#Calls the other programs
 call(["python", "screen_capture.py", file_name])
 call(["python", "picture_ocr_read.py", file_name])
 call(["python", "screen_text_array_format.py", file_name])

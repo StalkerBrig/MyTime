@@ -3,26 +3,41 @@ from screeninfo import get_monitors
 import time
 import sys
 from PIL import ImageFilter
+from PIL import Image
 
+#Used for testing
+MAX_ITERATION = 1
 
-
+#Gets the size of the user's monitor
 def monitor_size():
     get_monitors_str = str(get_monitors())
 
-    letter_index = 0
     screen_width_str = ""
     screen_height_str = ""
 
+    #Parses the string with the monitor size; will get the width and height
     for letter_index in range(len(get_monitors_str)):
+
+        # a '(' is the character right before the width
         if get_monitors_str[letter_index] == "(":
+            #need to increase by 1 so it doesn't copy the '('
             letter_index += 1
+            # 'x' is the character after the last number in the width
             while(get_monitors_str[letter_index] != "x"):
+                #copys all numbers for width
                 screen_width_str += get_monitors_str[letter_index]
                 letter_index += 1
+
+            #the character past the 'x' starts the heigth, so need to increase by 1
             letter_index += 1
+
+            #the character past the height is '+', so loop until we hit the '+'
             while(get_monitors_str[letter_index] != "+"):
+                #copys all numbers for height
                 screen_height_str += get_monitors_str[letter_index]
                 letter_index += 1
+
+            #don't need anything else after this, so can break out loop
             break
 
     screen_width = int(screen_width_str)
@@ -34,40 +49,52 @@ def monitor_size():
 print "Screen Capture... ",
 sys.stdout.flush()
 
-
 #TODO: Change this to accept argument value; using for MyMusicTime
-COLOR = True  # type: bool
+MUSICTIME = False  # type: bool
+
 
 file_path = "./screen_shots/"
 title = sys.argv[1]
 file_type = ".png"
 
+#gets monitor size
 screen_width, screen_height = monitor_size()
-screen_capture_rate_seconds = 3
 
-current_seconds = int(time.time())
-prev_5_second = 0
+#TODO: Potentially change to higher/lower values
+screen_capture_rate_seconds = 12
+
 current_iteration = 0
 
-'''
-while(current_iteration < 5):
-    if current_seconds%screen_capture_rate_seconds == 0 and prev_5_second != current_seconds:
-        screen_shot = ImageGrab.grab(bbox=(0, 0, screen_width, screen_height))
-        screen_shot.save(file_path + title + str(current_iteration) + file_type)
-        current_iteration += 1
-        prev_5_second = current_seconds
-    current_seconds = int(time.time())
-    print(current_seconds)
-'''
+#TODO: Will have to change this to some sort of interrupt; the user needs to determine when it stops
+#TODO: Currently using iterations for test purposes
+while(current_iteration < MAX_ITERATION):
+    #gets a screenshot of user screen
+    screen_shot_color = ImageGrab.grab(bbox=(0, 0, screen_width, screen_height))
 
-while(current_iteration < 100):
-    screen_shot = ImageGrab.grab(bbox=(0, 0, screen_width, screen_height))
-    if not COLOR:
-        screen_shot = screen_shot.convert('L')
+
+    #Making the image bigger; helps the OCR read it
+    screen_shot_color = screen_shot_color.resize((screen_width*2, screen_height*2), Image.NEAREST)
+    #screen_shot_color = screen_shot_color.filter(ImageFilter.GaussianBlur(1.1))
+    screen_shot_color.filter(ImageFilter.SHARPEN)
+
+    #Converts to black white; easier for OCR readers
+    screen_shot_bw = screen_shot_color.convert('L')
+
+    #TODO: Use a blur? Not sure yet
     #screen_shot = screen_shot.filter(ImageFilter.GaussianBlur(.5))
-    screen_shot.save(file_path + title + "_" + str(current_iteration) + file_type)
+
+    #saves screen shot to a file
+    screen_shot_bw.save(file_path + title + "_" + str(current_iteration) + file_type, quality=300)
+
+    #saves color screen shot for MyMusicTime
+    if MUSICTIME == True:
+        screen_shot_color.save(file_path + title + "_" + str(current_iteration) + file_type, quality=300)
+
     current_iteration += 1
-    time.sleep(screen_capture_rate_seconds)
+    #sleeps process until a new screenshot is needed, based on screen_capture_rate
+
+    if current_iteration == MAX_ITERATION-1:
+        time.sleep(screen_capture_rate_seconds)
 
 
 print("complete!")
