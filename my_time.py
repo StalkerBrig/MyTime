@@ -2,6 +2,8 @@ from subprocess import call
 import sys
 import os
 from datetime import datetime
+from screen_capture import ScreenCapture
+from picture_ocr_read import OCRRead
 import PySimpleGUI27 as sg
 
 #TODO: Using for potentialy GUI in the future
@@ -48,7 +50,20 @@ if not os.path.isdir(picture_ocr_read_dir):
         print("Could not make folder: screen_text")
 
 
+current_iteration = 0
+
+sc = ScreenCapture(title=file_name)
+ocrr = OCRRead(title=file_name)
+
+while(current_iteration < 1):
+    sc.take_screen_shot(current_iteration)
+    ocrr.ocr_read(current_iteration)
+    current_iteration += 1
+
+
+
+
 #Calls the other programs
-call(["python", "screen_capture.py", file_name])
-call(["python", "picture_ocr_read.py", file_name])
-call(["python", "screen_text_array_format.py", file_name])
+#call(["python", "screen_capture.py", file_name])
+#call(["python", "picture_ocr_read.py", file_name])
+#call(["python", "screen_text_array_format.py", file_name])
