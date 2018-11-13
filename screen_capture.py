@@ -6,9 +6,9 @@ from PIL import ImageFilter
 from PIL import Image
 
 class ScreenCapture:
+    
+    _current_iteration = 0
 
-    #TODO: Need to make kwargs work so is more versatile
-    #def __init__(self, **kwargs):
     def __init__(self, title, my_music_time_title=None, my_music_time=None, file_path=None, image_type=None):
 
         self.title = title
@@ -67,7 +67,7 @@ class ScreenCapture:
         self._screen_width = int(_screen_width_str)
         self._screen_height = int(_screen_height_str)
 
-    def take_screen_shot(self, iteration):
+    def take_screen_shot(self):
         #gets a screenshot of user screen
         screen_shot_color = ImageGrab.grab(bbox=(0, 0, self._screen_width, self._screen_height))
 
@@ -79,10 +79,11 @@ class ScreenCapture:
         screen_shot_bw = screen_shot_color.convert('L')
 
         #saves screen shot to a file
-        screen_shot_bw.save(self.file_path + self.title + "_" + str(iteration) + self.image_type, quality=300)
+        screen_shot_bw.save(self.file_path + self.title + "_" + str(self._current_iteration) + self.image_type, quality=300)
 
         #saves color screen shot for MyMusicTime
         if self.my_music_time == True:
             screen_shot_color.save(self.file_path + self.title + "_" + self.my_music_time_title + "_"
-                                   + str(iteration) + self.image_type, quality=300)
+                                   + str(self._current_iteration) + self.image_type, quality=300)
 
+        self._current_iteration += 1
